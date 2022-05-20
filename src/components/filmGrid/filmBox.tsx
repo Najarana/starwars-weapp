@@ -4,25 +4,35 @@ import { Film } from '../../api/types';
 
 
 
-const Box = styled.div `
+export const Box = styled.div `
   display: flex;
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 100%;
   margin: 8px;
   padding: 8px;
-  background-color: lightblue;
   flex-wrap: wrap;
 `;
 
-const Title = styled.div `
-  width: 100%;
-  align-self: center;
+export const BlueBox = styled(Box)`
+  background-color: lightblue;
+  max-width: 300px;
+`
 
+const Title = styled.div `
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
 `;
 
 const ReleaseDate = styled.div `
-width: 100%;
-  justify-self: flex-end;
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  @media (max-width: 1140px) {
+    justify-content: flex-end;
+  }
 `
 
 interface Props {
@@ -35,10 +45,10 @@ function FilmBox({film, onClick}: Props) {
     onClick(film);
   }
   return (
-    <Box onClick={handleClick}>
+    <BlueBox onClick={handleClick}>
       <Title>{film.title}</Title>
       <ReleaseDate>{film.release_date}</ReleaseDate>
-    </Box>
+    </BlueBox>
   )
 }
 

@@ -7,7 +7,7 @@ export const Grid = styled.div<GridProps> `
   flex-wrap: wrap;
   box-sizing: border-box;
   width: 100%;
-  direction: ${p => p.direction === 'column' ? 'column' : 'row'};
+  flex-direction: ${p => p.direction === 'column' ? 'column' : 'row'};
 `;
 
 export const GridItem = styled.div `

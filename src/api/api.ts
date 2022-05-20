@@ -18,4 +18,4 @@ const getCharacter = (peopleResourceUrl: string): AxiosPromise<Character> => {
 }
 
 
-export {getFilms, getPeople};
+export {getFilms, getPeople, getCharacter};
