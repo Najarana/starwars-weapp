@@ -1,14 +1,9 @@
 
 
-import { Cancel } from '@mui/icons-material';
-import { Dialog, DialogTitle, DialogContent, Typography, Skeleton, IconButton } from '@mui/material';
-
-import axios, { Axios, AxiosPromise } from 'axios';
-import { FC, useEffect, useState } from 'react';
+import { Dialog, Typography, Skeleton } from '@mui/material';
+import { FC } from 'react';
 import styled from 'styled-components';
-import { getCharacter, getPeople } from '../../api/api';
 import { Character, Film } from '../../api/types';
-import { Grid } from '../grid';
 
 interface Props {
   film?: Film;
@@ -68,7 +63,6 @@ function FilmInformationModal({film, characters, loadingCharacters, closeModal}:
         <CharcterListContainer>
           <CharacterList characters={characters} listLength={film?.characters.length} loading={loadingCharacters}/>
         </CharcterListContainer>
-
       </ContentContainer>
     </Dialog>
 
@@ -83,11 +77,10 @@ interface CharacterListProps {
 }
 
 const CharacterList:FC<CharacterListProps> = ({characters, listLength, loading}: CharacterListProps) => {
-  console.log(characters)
   if (loading) {
     const skeletonLoaders = []
     for (let i = 0; i < listLength; i++) {
-      skeletonLoaders.push(<Typography><Skeleton width={'200px'} /></Typography>)
+      skeletonLoaders.push(<Typography key={i}><Skeleton width={'200px'} /></Typography>)
     }
     return <>{skeletonLoaders}</>
   }
@@ -95,7 +88,7 @@ const CharacterList:FC<CharacterListProps> = ({characters, listLength, loading}:
   return (
     <>
       {characters.map(character => (
-        <Typography>{character.name}</Typography>
+        <Typography key={character.name}>{character.name}</Typography>
       ))
       }
     </>

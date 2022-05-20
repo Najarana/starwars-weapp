@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Page from './components/page';
-import { getFilms, getPeople } from './api/api';
-import { Character, Film } from './api/types';
+import { getFilms } from './api/api';
+import { Film } from './api/types';
 import FilmGrid from './components/filmGrid';
 
 function App() {

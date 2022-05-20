@@ -1,11 +1,6 @@
-import { FC } from 'react';
 import styled from 'styled-components';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const PageDiv = styled.div`
+const Page = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   margin: auto;
   width: 80%;
@@ -14,14 +9,6 @@ const PageDiv = styled.div`
     padding: 16px;
   }
 `
-
-const Page:FC<Props> = ({ children }) => {
-  return (
-    <PageDiv>
-      {children}
-    </PageDiv>
-  )
-
-}
-
 export default Page;
+
+

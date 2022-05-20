@@ -1,7 +1,6 @@
 import { Skeleton } from '@mui/material';
 import { AxiosPromise } from 'axios';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { getCharacter } from '../../api/api';
 import { Character, Film } from '../../api/types';
 import { Grid, GridItem } from '../grid';
@@ -19,16 +18,6 @@ function FilmGrid({films, loadingFilms}: Props) {
   const [characterMap, setCharacterMap] = useState<Record<string, Character>>({});
   const [loadingCharacters, setLoadingCharcters] = useState(false);
 
-  const closeModal = () => {
-    setSelectedFilm(undefined);
-  }
-
-  useEffect(() => {
-    if(selectedFilm) {
-      loadCharacters(selectedFilm);
-    }
-  }, [selectedFilm?.title])
-
   const loadCharacters = (film: Film) => {
     const charactersToFetch = film.characters.filter(character => characterMap[character] === undefined);
     if (charactersToFetch.length) {
@@ -37,18 +26,26 @@ function FilmGrid({films, loadingFilms}: Props) {
     const promises: AxiosPromise<Character>[] = charactersToFetch.map(getCharacter);
 
     Promise.all(promises).then((responses) => {
-
       const fetchedCharacters: Record<string, Character> = responses
         .map(response => response.data)
         .reduce((current, character) => ({...current, [character.url]: character}), {});
-      console.log(fetchedCharacters)
+
       setCharacterMap((prevCharacterMap) => {
         return  {...prevCharacterMap, ...fetchedCharacters}
       })
     }).finally(() => setLoadingCharcters(false));
   }
 
-  const getCharactersForSelectedMovie = (keys: string[] | undefined): Character[] => {
+  const selectFilm = (film: Film) => {
+    loadCharacters(film);
+    setSelectedFilm(film);
+  }
+
+  const closeModal = () => {
+    setSelectedFilm(undefined);
+  }
+
+  const getCharactersWithKeys = (keys: string[] | undefined): Character[] => {
     return keys ? keys.map(key => characterMap[key]) : [];
   }
 
@@ -62,7 +59,7 @@ function FilmGrid({films, loadingFilms}: Props) {
 
     return films.map(film => (
       <GridItem>
-        <FilmBox film={film} onClick={setSelectedFilm}/>
+        <FilmBox film={film} onClick={selectFilm}/>
       </GridItem>
     ))
   }
@@ -73,7 +70,7 @@ function FilmGrid({films, loadingFilms}: Props) {
       <FilmInformationModal
         closeModal={closeModal}
         film={selectedFilm}
-        characters={getCharactersForSelectedMovie(selectedFilm?.characters)}
+        characters={getCharactersWithKeys(selectedFilm?.characters)}
         loadingCharacters={loadingCharacters}/>
     </Grid>
   )

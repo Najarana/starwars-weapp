@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { Film } from '../../api/types';
 
-
-
-
 export const Box = styled.div `
   display: flex;
   height: 150px;
@@ -13,8 +10,10 @@ export const Box = styled.div `
   flex-wrap: wrap;
 `;
 
-export const BlueBox = styled(Box)`
-  background-color: lightblue;
+// Because starwars
+export const StarWarsBox = styled(Box)`
+  background-color: black;
+  color: yellow;
   max-width: 300px;
 `
 
@@ -45,10 +44,10 @@ function FilmBox({film, onClick}: Props) {
     onClick(film);
   }
   return (
-    <BlueBox onClick={handleClick}>
+    <StarWarsBox onClick={handleClick}>
       <Title>{film.title}</Title>
       <ReleaseDate>{film.release_date}</ReleaseDate>
-    </BlueBox>
+    </StarWarsBox>
   )
 }
 
